@@ -1,0 +1,18 @@
+# Node
+node_modules/
+dist/
+package-lock.json
+
+# VS Code
+.vscode/
+
+# Env
+.env
+
+# OS
+.DS_Store
+
+# LaTeX build files
+*.aux
+*.log
+*.out

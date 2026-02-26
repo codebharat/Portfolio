@@ -1,0 +1,171 @@
+
+% ---------------- PACKAGES ----------------
+\documentclass[10pt,a4paper]{article}
+\usepackage[a4paper,margin=0.55in]{geometry}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+\usepackage{setspace}
+
+
+
+
+\pagenumbering{gobble}
+\setlength{\parindent}{0pt}
+
+% ---------------- SECTION STYLE ----------------
+\titleformat{\section}
+  {\large\bfseries}{}{0pt}{}
+  [\titlerule]
+
+\titlespacing{\section}{0pt}{8pt}{4pt}
+
+\setlist[itemize]{
+  leftmargin=1.2em,
+  itemsep=2pt,   % 🔥 space between bullet points
+  topsep=2pt,    % small space before/after list
+  parsep=0pt,
+  label=\textbullet
+}
+
+
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=black
+}
+
+% ---------------- DOCUMENT ----------------
+\begin{document}
+
+% ---------------- HEADER ----------------
+\begin{center}
+
+   {\LARGE \textbf{BHARAT BARAIYA}}\\[3pt]   % extra space below name
+{\small\textit{Laravel Developer}}\\[2pt]     % space after title before next content
+
+
+    \small
+    \faPhone\ +91 63539 61557 \quad
+    \faWhatsapp\ +91 81406 37980 \quad
+    \faEnvelope\ \href{mailto:baraiyabharat37@gmail.com}{\underline{baraiyabharat37@gmail.com}} \\[4pt]
+
+    \faGlobe\ \href{https://bharatcancode.com}{\underline{bharatcancode.com}}
+    \quad
+    \faLinkedin\ \href{https://linkedin.com/in/bharat-baraiya}{\underline{linkedin.com/in/bharat-baraiya}}
+    \quad
+    \faGithub\ \href{https://github.com/codebharat
+}{\underline{github.com/codebharat}}
+\end{center}
+
+
+
+
+\vspace{4pt}
+\hrule
+\vspace{8pt}
+
+
+
+
+% ---------------- SKILLS ----------------
+\section{Technical Skills}
+\begin{itemize}
+  \item \textit{\textbf{Languages:}} PHP, Java, Python, JavaScript, SQL, HTML, CSS
+  \item \textit{\textbf{Frameworks:}} Laravel, Livewire, Node.js, Express.js, jQuery, Alpine.js
+  \item \textit{\textbf{Databases:}} MySQL, MongoDB
+  \item \textit{\textbf{UI / Web:}} Tailwind CSS, Bootstrap, AJAX, Responsive Design
+  \item \textit{\textbf{Other:}} REST APIs, Git, Authentication \& Authorization,Deployment (Filezila, cPanel), Hosting Management
+\end{itemize}
+
+
+
+% ---------------- EXPERIENCE ----------------
+\section{Experience}
+
+\textbf{Hyvikk Solutions} \hfill \textit{May 2024 -- Present} \\
+\vspace{2pt} % extra space between company name and job title
+\textit{Laravel Developer}
+\begin{itemize}
+  \item Developing and maintaining Laravel-based applications for business workflows and internal products.
+  \item Worked on production systems including \textbf{\textit{HRMS}}, \textbf{\textit{Skill Sales}},\textbf{\textit{DigiBooks}}, \textbf{\textit{DoodhSetu}}, and \textbf{\textit{CorpPark}}.
+  \item Implemented REST APIs, authentication, role-based access control, and admin dashboards.
+  \item Optimized database queries and application performance using eager loading and pagination.
+\end{itemize}
+
+
+\vspace{4pt}
+\textit{Laravel Developer Intern} \hfill \textit{Feb 2024 -- Apr 2024}
+\begin{itemize}
+  \item Trained in Laravel framework fundamentals including MVC architecture, routing, authentication, and CRUD operations.
+  \item Built an end-to-end e-commerce application as part of internship training.
+\end{itemize}
+
+
+% ---------------- PROJECTS ----------------
+\section{Projects}
+
+\textbf{HRMS System — HR Automation Platform} \hfill \textit{Laravel, Livewire, Alpine.js, Tailwind}
+\vspace{2pt}
+\begin{itemize}
+  \item Automated leave and WFH workflows by replacing Google Forms, and developed additional HR modules including salary and expense management, currently used  by 40+ employees.
+  \item Implemented role-based access with multi-guard authentication for employees and admins.
+  \item Built approval workflows via portal, email, and Slack with automated payslip generation.
+\end{itemize}
+
+\textbf{DoodhSetu — Milk Distribution \& Billing System} \hfill \textit{Laravel,Jquery,Bootstrap,REST APIs}
+\vspace{2pt}
+\begin{itemize}
+  \item Developed admin panel and APIs  for daily milk orders currently handling data  of 100+ customers.
+  \item Implemented vendor, customer, pricing, invoicing, and revenue analytics modules.
+  \item Optimized performance for 6,000+ records using pagination and eager loading.
+\end{itemize}
+
+\textbf{Skill Sales — Training \& Quiz Platform} \hfill \textit{Laravel, jQuery, Bootstrap}
+\vspace{2pt}
+\begin{itemize}
+  \item Developed admin panel and REST APIs for a customer training application.
+  \item Integrated external authentication system and built quiz, training, and result management.
+  \item Supported multiple training content types including PDFs, URLs, and text.
+\end{itemize}
+
+\textbf{DigiBooks — Digital Learning Platform} \hfill \textit{Laravel, jQuery, Bootstrap}
+\vspace{2pt}
+\begin{itemize}
+  \item Built a digital book system with school-based access control and content limits.
+  \item Implemented topic-wise content management with PDFs, images, and YouTube links.
+  \item Developed branded QR codes to access book content and school-specific information.
+\end{itemize}
+
+
+
+\textbf{CorpPark — Parking \& Vehicle Management System} \hfill \textit{Laravel, jQuery, Bootstrap}
+\vspace{2pt}
+\begin{itemize}
+  \item Built QR-based vehicle entry/exit tracking for corporate parking management.
+  \item Implemented modules for users, vehicles, buildings, offices, and guest access.
+  \item Enabled amenity booking request and approval for office users and managers.
+\end{itemize}
+
+
+
+
+
+% ---------------- EDUCATION ----------------
+\section{Education}
+
+\textbf{Shantilal Shah Engineering College} \hfill \textit{2024} \\
+B.E. in Information Technology \hfill \textbf{CGPA: 8.16}
+
+\textbf{Sir Bhavsinhji Polytechnic Institute} \hfill \textit{2021} \\
+Diploma in Information Technology \hfill \textbf{CGPA: 7.57}
+
+\textbf{Saraswati Vidhyalay}, Rajula \hfill \textit{2018} \\
+Secondary Education \hfill \textbf{Score: 69\%}
+
+
+\end{document}
