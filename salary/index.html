@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leave Cut Salary Calculator</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --card-bg: #ffffff;
+    --text: #1a1d23;
+    --muted: #6b7280;
+    --accent: #4f46e5;
+    --accent-soft: #eef2ff;
+    --border: #e5e7eb;
+    --danger: #dc2626;
+    --success: #059669;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #16171b;
+      --card-bg: #1f2127;
+      --text: #f2f3f5;
+      --muted: #9aa0aa;
+      --accent: #818cf8;
+      --accent-soft: #2a2c3d;
+      --border: #2d2f36;
+      --danger: #f87171;
+      --success: #34d399;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #16171b;
+    --card-bg: #1f2127;
+    --text: #f2f3f5;
+    --muted: #9aa0aa;
+    --accent: #818cf8;
+    --accent-soft: #2a2c3d;
+    --border: #2d2f36;
+    --danger: #f87171;
+    --success: #34d399;
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+    min-height: 100%;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  h1 {
+    font-size: 1.3rem;
+    margin: 0 0 4px;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin: 0 0 24px;
+  }
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+  .field {
+    margin-bottom: 18px;
+  }
+  input[type="number"] {
+    width: 100%;
+    padding: 11px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 1rem;
+  }
+  input[type="number"]:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+  .hint {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 5px;
+  }
+  .rule-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .breakdown {
+    border-top: 1px dashed var(--border);
+    margin-top: 20px;
+    padding-top: 16px;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    font-size: 0.92rem;
+  }
+  .row .label { color: var(--muted); }
+  .row .value { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .row.cut .value { color: var(--danger); }
+  .row.final {
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+    padding-top: 14px;
+    font-size: 1.1rem;
+  }
+  .row.final .value { color: var(--success); }
+  .formula {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-top: 4px;
+    word-break: break-word;
+  }
+  .empty {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    padding: 20px 0;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Leave Cut Salary Calculator</h1>
+    <p class="subtitle">Enter monthly salary and number of unpaid leave days.</p>
+
+    <div class="field">
+      <label for="salary">Monthly Salary (₹)</label>
+      <input type="number" id="salary" placeholder="e.g. 13500" min="0" step="1">
+    </div>
+
+    <div class="field">
+      <label for="leaveDays">Leave Days</label>
+      <input type="number" id="leaveDays" placeholder="e.g. 3" min="0" step="1">
+    </div>
+
+    <div class="field" id="monthField">
+      <label for="monthPicker">Month (for 6+ day rule)</label>
+      <input type="month" id="monthPicker">
+      <div class="hint" id="monthHint"></div>
+    </div>
+
+    <div id="output"></div>
+  </div>
+
+<script>
+  const salaryInput = document.getElementById('salary');
+  const leaveInput = document.getElementById('leaveDays');
+  const monthPicker = document.getElementById('monthPicker');
+  const monthHint = document.getElementById('monthHint');
+  const output = document.getElementById('output');
+
+  function fmt(n) {
+    if (!isFinite(n)) return '-';
+    return n.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+  }
+
+  function daysInSelectedMonth() {
+    if (monthPicker.value) {
+      const [y, m] = monthPicker.value.split('-').map(Number);
+      return new Date(y, m, 0).getDate(); // m is 1-indexed here, day 0 of next month = last day of this month
+    }
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+  }
+
+  function calculate() {
+    const salary = parseFloat(salaryInput.value);
+    const leaveDays = parseFloat(leaveInput.value);
+    const monthDays = daysInSelectedMonth();
+    monthHint.textContent = `This month has ${monthDays} days — used as the divisor for the 6+ day rule.`;
+
+    if (!salary || salary <= 0 || leaveDays === '' || leaveDays === null || isNaN(leaveDays) || leaveDays < 0) {
+      output.innerHTML = '<div class="empty">Enter salary and leave days to see the calculation.</div>';
+      return;
+    }
+
+    let perDay, cut, ruleLabel, formulaText;
+
+    if (leaveDays <= 5) {
+      // Up to 5 days: per day cut = salary * 4%
+      perDay = salary * 0.04;
+      cut = perDay * leaveDays;
+      ruleLabel = 'Rule applied: Up to 5 days (salary × 4% per day)';
+      formulaText = `Per-day cut = ${fmt(salary)} × 4% = ${fmt(perDay)}\nTotal cut = ${fmt(perDay)} × ${leaveDays} = ${fmt(cut)}`;
+    } else {
+      // 6+ days: per day cut = salary / days in selected month
+      perDay = salary / monthDays;
+      cut = perDay * leaveDays;
+      ruleLabel = `6 days or more (salary ÷ ${monthDays} days per day)`;
+      formulaText = `Per-day cut = ${fmt(salary)} ÷ ${monthDays} = ${fmt(perDay)}\nTotal cut = ${fmt(perDay)} × ${leaveDays} = ${fmt(cut)}`;
+    }
+
+    const final = salary - cut;
+
+    output.innerHTML = `
+      <span class="rule-badge">${ruleLabel}</span>
+      <div class="breakdown">
+        <div class="row">
+          <span class="label">Per-day cut rate</span>
+          <span class="value">₹${fmt(perDay)}</span>
+        </div>
+        <div class="row cut">
+          <span class="label">Total cut (${leaveDays} day${leaveDays == 1 ? '' : 's'})</span>
+          <span class="value">− ₹${fmt(cut)}</span>
+        </div>
+        <div class="row final">
+          <span class="label">Final salary</span>
+          <span class="value">₹${fmt(final)}</span>
+        </div>
+        <div class="formula">${formulaText.replace(/\n/g, '<br>')}</div>
+      </div>
+    `;
+  }
+
+  salaryInput.addEventListener('input', calculate);
+  leaveInput.addEventListener('input', calculate);
+  monthPicker.addEventListener('input', calculate);
+
+  // default month picker to current month
+  const now = new Date();
+  monthPicker.value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
+  // demo defaults matching the example given
+  salaryInput.value = 13500;
+  leaveInput.value = 3;
+  calculate();
+</script>
+</body>
+</html>
